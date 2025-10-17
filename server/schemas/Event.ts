@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model, Types } from "mongoose";
 import { IVendor } from "./Vendor";
 
+// The object ttpe for event when we fetch events on
 export interface IEvent extends Document {
   name: string;
   image?: string;
@@ -15,6 +16,7 @@ export interface IEvent extends Document {
   vendorList: Types.ObjectId[] | IVendor[];
 }
 
+// The schema in which an event will be saved in the MongoDB database
 const eventSchema: Schema<IEvent> = new Schema({
   name: { type: String, required: true },
   image: String,
@@ -29,6 +31,8 @@ const eventSchema: Schema<IEvent> = new Schema({
   vendorList: [{ type: Schema.Types.ObjectId, ref: "Vendor" }],
 });
 
+// We create a model that can be used to perform CRUD operations on the subseqent Event collection
+// The Event collection is created when we push the first element to it
 const Event: Model<IEvent> = mongoose.model<IEvent>("Event", eventSchema);
 
 export default Event;
